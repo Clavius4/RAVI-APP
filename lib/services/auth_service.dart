@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:tax_advisory_app/models/user_model.dart';
 
 class AuthService {
-  static const String baseUrl = 'http://localhost:9090/api/auth';
+  static const String baseUrl = 'http://138.68.168.43:9091/api/auth';
 
   Future<String> register(UserModel user) async {
     var headers = {

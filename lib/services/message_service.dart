@@ -8,7 +8,7 @@ class MessagingService {
   static Future<MessageResponse?> sendMessage(String message, BuildContext context) async {
     String tk = await SessionManager.getAccessToken();
     var response = await http.get(
-      Uri.parse('http://172.17.20.221:9091/api/sms/user?message=$message'),
+      Uri.parse('http://138.68.168.43:9091/api/sms/user?message=$message'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $tk',

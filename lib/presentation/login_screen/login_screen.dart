@@ -72,6 +72,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     alignment: Alignment.bottomCenter,
                     children: [
                       _buildTaxAdvisorySystemStack(context),
+                      Positioned(
+                        bottom: 2,  // Adjust the bottom position as needed
+                        left: 2,    // Adjust the left position as needed
+                        child: TextButton(
+                          onPressed: () {
+                            // Add onPressed logic here
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RegisterScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            UsedWords.accountRegister,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.blueAccent,
+                            ),
+                          ),
+                        ),
+                      ),
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Container(
@@ -149,29 +172,21 @@ class _LoginScreenState extends State<LoginScreen> {
                                 },
                               ),
                               SizedBox(height: 43.v),
-                              Positioned(
-                                bottom: 2,  // Adjust the bottom position as needed
-                                left: 2,    // Adjust the left position as needed
-                                child: TextButton(
-                                  onPressed: () {
-                                    // Add onPressed logic here
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => RegisterScreen(),
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    UsedWords.accountRegister,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.blueAccent,
+                              TextButton(
+                                onPressed: () {
+                                  // Handle button press
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => RegisterScreen(),
                                     ),
-                                  ),
-                                ),
+                                        (route) => false,
+                                  );
+                                  print('Already have account? Sign Up');
+                                },
+                                child: Text('Already have account? Sign Up'),
                               ),
+                              SizedBox(height: 10,),
                               CustomElevatedButton(
                                 onPressed: () async {
                                   if (_formKey.currentState!.validate()) {

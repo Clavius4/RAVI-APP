@@ -15,7 +15,7 @@ class RegisterService {
       String organisationName,
       ) async {
 
-    var response = await http.post(Uri.parse('http://172.17.20.221:9091/api/auth/register'),
+    var response = await http.post(Uri.parse('http://138.68.168.43:9091/api/auth/register'),
         headers:{
         'Content-Type': 'application/json',
         },

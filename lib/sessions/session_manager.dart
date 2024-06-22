@@ -1,8 +1,5 @@
 // sessions/session_manager.dart
-import 'dart:ffi';
-
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/auth_response.dart';
 
 class SessionManager {
@@ -11,61 +8,103 @@ class SessionManager {
   static const String _tokenTypeKey = 'token_type';
   static const String _expiresInKey = 'expires_in';
   static const String _scopeKey = 'scope';
+  static const String _phoneNumberKey = 'phoneNumber';
+  static const String _firstNameKey = 'firstName';
+  static const String _lastNameKey = 'lastName';
+  static const String _organisationNameKey = 'organisationName';
+  static const String _organisationTypeKey = 'organisationType';
+  static const String _regionKey = 'region';
+  static const String _districtKey = 'district';
 
-
-  static void saveAccessToken(String atk) async {
-    final preference = await SharedPreferences.getInstance();
-    preference.setString(_accessTokenKey, atk);
-}
-
-static void saveLoggedIn(bool loginValue) async {
-    final preference = await SharedPreferences.getInstance();
-    preference.setBool("login", loginValue);
-}
-
-static Future<bool> getLoggedInUser() async{
-    final preference = await SharedPreferences.getInstance();
-    return preference.getBool("login")?? false;
-}
-
-static void removeLoggedIn() async{
-    final preference = await SharedPreferences.getInstance();
-    preference.setBool("login", false);
-}
-
-static Future<String> getAccessToken() async {
-    final preference = await SharedPreferences.getInstance();
-    return preference.getString(_accessTokenKey)?? "";
+  static Future<void> saveAccessToken(String atk) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_accessTokenKey, atk);
   }
 
-  static Future<void> saveSession(AuthResponse authResponse) async {
+  static Future<void> saveLoggedIn(bool loginValue) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_accessTokenKey, authResponse.accessToken);
-    await prefs.setString(_refreshTokenKey, authResponse.refreshToken);
-    await prefs.setString(_tokenTypeKey, authResponse.tokenType);
-    await prefs.setInt(_expiresInKey, authResponse.expiresIn);
-    await prefs.setString(_scopeKey, authResponse.scope);
+    await prefs.setBool("login", loginValue);
   }
 
-  static Future<AuthResponse?> getSession() async {
+  static Future<void> saveFirstName(String firstname) async {
     final prefs = await SharedPreferences.getInstance();
-    final accessToken = prefs.getString(_accessTokenKey);
-    final refreshToken = prefs.getString(_refreshTokenKey);
-    final tokenType = prefs.getString(_tokenTypeKey);
-    final expiresIn = prefs.getInt(_expiresInKey);
-    final scope = prefs.getString(_scopeKey);
+    await prefs.setString(_firstNameKey, firstname);
+  }
 
-    if (accessToken != null && refreshToken != null && tokenType != null && expiresIn != null && scope != null) {
-      return AuthResponse(
-        accessToken: accessToken,
-        tokenType: tokenType,
-        refreshToken: refreshToken,
-        expiresIn: expiresIn,
-        scope: scope,
-      );
-    } else {
-      return null;
-    }
+  static Future<void> saveLastName(String lastname) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_lastNameKey, lastname);
+  }
+
+  static Future<void> savePhone(String phone) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_phoneNumberKey, phone);
+  }
+
+  static Future<void> saveOrganizationName(String orgName) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_organisationNameKey, orgName);
+  }
+
+  static Future<void> saveOrganizationType(String orgType) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_organisationTypeKey, orgType);
+  }
+
+  static Future<void> saveRegion(String region) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_regionKey, region);
+  }
+
+  static Future<void> saveDistrict(String district) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_districtKey, district);
+  }
+
+  static Future<bool> getLoggedInUser() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool("login") ?? false;
+  }
+
+  static Future<void> removeLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("login", false);
+  }
+
+  static Future<String> getAccessToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_accessTokenKey) ?? "";
+  }
+
+  static Future<String> getFirstname() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_firstNameKey) ?? "";
+  }
+
+  static Future<String> getPhone() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_phoneNumberKey) ?? "";
+  }
+
+  static Future<String> getLastName() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_lastNameKey) ?? "";
+  }
+  static Future<String> getDistrict() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_districtKey) ?? "";
+  }
+  static Future<String> getRegion() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_regionKey) ?? "";
+  }
+  static Future<String> getOrganisationName() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_organisationNameKey) ?? "";
+  }
+  static Future<String> getOrganisationType() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_organisationTypeKey) ?? "";
   }
 
   static Future<void> clearSession() async {
@@ -75,7 +114,14 @@ static Future<String> getAccessToken() async {
     await prefs.remove(_tokenTypeKey);
     await prefs.remove(_expiresInKey);
     await prefs.remove(_scopeKey);
+    await prefs.remove(_phoneNumberKey);
+    await prefs.remove(_firstNameKey);
+    await prefs.remove(_lastNameKey);
+    await prefs.remove(_organisationNameKey);
+    await prefs.remove(_organisationTypeKey);
+    await prefs.remove(_districtKey);
+    await prefs.remove(_regionKey);
 
-    prefs.setBool("login", false);
+    await prefs.setBool("login", false);
   }
 }
